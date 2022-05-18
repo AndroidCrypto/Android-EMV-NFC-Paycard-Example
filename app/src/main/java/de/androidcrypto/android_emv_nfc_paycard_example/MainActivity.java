@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Reader
      * This app is getting just a small subset of all available data fields on an EMV card:
      * typeName, aid(s), card number and expiration date of the card.
      * The complete code is available here:
-     * https://github.com/androidcrypto/Android-EMV-NFC-Paycard-Example
+     * https://github.com/AndroidCrypto/Android-EMV-NFC-Paycard-Example
      *
      * Don't forget to view the Logcat as the app gives a deep look to the commands and data
      * that is exchanged between the Android device and the EMV card
