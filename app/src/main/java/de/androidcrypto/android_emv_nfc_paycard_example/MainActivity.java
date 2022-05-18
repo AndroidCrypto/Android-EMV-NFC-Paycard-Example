@@ -1,41 +1,48 @@
 package de.androidcrypto.android_emv_nfc_paycard_example;
 
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.IsoDep;
-import android.nfc.tech.NfcA;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.github.devnied.emvnfccard.enums.EmvCardScheme;
 import com.github.devnied.emvnfccard.model.Application;
 import com.github.devnied.emvnfccard.model.EmvCard;
-import com.github.devnied.emvnfccard.model.EmvTrack1;
-import com.github.devnied.emvnfccard.model.EmvTrack2;
-import com.github.devnied.emvnfccard.model.EmvTransactionRecord;
-import com.github.devnied.emvnfccard.model.Service;
-import com.github.devnied.emvnfccard.model.enums.CardStateEnum;
 import com.github.devnied.emvnfccard.parser.EmvTemplate;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NfcAdapter.ReaderCallback {
-
-    // compile 'com.github.devnied.emvnfccard:library:3.0.1' does not work
-    // implementation 'com.github.devnied.emvnfccard:library:3.0.1' is ok
-    // starting code inspired by https://stackoverflow.com/questions/58825020/kotlin-emv-android-nfc-tag-setconnectedtechnology-error
-    // answer:
+    /**
+     * This sample program shows how to implement the library EMV-NFC-Paycard-Enrollment
+     * for reading the data on an EMC (CreditCard etc) with the NFC technology (contactless).
+     * Source code: https://github.com/devnied/EMV-NFC-Paycard-Enrollment
+     *
+     * The app uses the IsoDep class for communication with the NFC card and
+     * the enableReaderMode on the NfcAdapter for detecting a NFC tag;
+     * this mode is more reliable then the often used enableForegroundDispatch.
+     * see here for a more detailed explanation:
+     * https://stackoverflow.com/questions/33633736/whats-the-difference-between-enablereadermode-and-enableforegrounddispatch
+     *
+     * This app is getting just a small subset of all available data fields on an EMV card:
+     * typeName, aid(s), card number and expiration date of the card.
+     * The complete code is available here:
+     * https://github.com/androidcrypto/Android-EMV-NFC-Paycard-Example
+     *
+     * Don't forget to view the Logcat as the app gives a deep look to the commands and data
+     * that is exchanged between the Android device and the EMV card
+     *
+     * The app was tested on a real device with Android 8 (SDK 26) and Android 12 (SDK 31).
+     */
 
     TextView nfcaContent;
     private NfcAdapter mNfcAdapter;
@@ -59,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Reader
 
             // Enable ReaderMode for all types of card and disable platform sounds
             // the option NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK is NOT set
-            // to get the data of the tag afer reading
+            // to get the data of the tag after reading
             mNfcAdapter.enableReaderMode(this,
                     this,
                     NfcAdapter.FLAG_READER_NFC_A |
