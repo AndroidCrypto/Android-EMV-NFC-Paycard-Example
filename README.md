@@ -21,4 +21,7 @@ https://github.com/AndroidCrypto/Android-EMV-NFC-Paycard-Example
 Don't forget to view the Logcat as the app gives a deep look to the commands and data 
 that is exchanged between the Android device and the EMV card
 
+As this app does not use any intent filter the data grabbing will work only if the app is
+in the foreground when the EMV card is detected.
+
 The app was tested on a real device with Android 8 (SDK 26) and Android 12 (SDK 31).
